@@ -1,0 +1,28 @@
+name: 定时总结
+
+on:
+  schedule:
+    - cron: '0 1 * * *'
+    - cron: '0 2 * * 6'
+  workflow_dispatch:
+
+jobs:
+  daily-summary:
+    if: github.event.schedule == '0 1 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 触发每日总结
+        run: |
+          curl -X POST https://sixu-diary.vercel.app/api/summary \
+            -H "Content-Type: application/json" \
+            -d '{"type":"daily","sendEmail":true}'
+
+  weekly-summary:
+    if: github.event.schedule == '0 2 * * 6' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 触发每周总结
+        run: |
+          curl -X POST https://sixu-diary.vercel.app/api/summary \
+            -H "Content-Type: application/json" \
+            -d '{"type":"weekly","sendEmail":true}'
