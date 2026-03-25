@@ -1,0 +1,133 @@
+module.exports = async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const { url, description } = req.body || {};
+  if (!url) return res.status(400).json({ error: 'url required' });
+
+  const platform = detectPlatform(url);
+  let title = description || '';
+  let estimatedTime = '';
+  let contentSnippet = description || '';
+
+  // Try to fetch content for WeChat articles
+  if (platform === 'wechat' && !description) {
+    try {
+      const r = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15',
+        },
+        signal: AbortSignal.timeout(8000),
+      });
+      const html = await r.text();
+
+      // Extract title
+      const titleMatch = html.match(/<h1[^>]*class="rich_media_title"[^>]*>([\s\S]*?)<\/h1>/) ||
+                         html.match(/<meta[^>]+og:title[^>]+content="([^"]+)"/) ||
+                         html.match(/<title>([^<]+)<\/title>/);
+      if (titleMatch) title = titleMatch[1].replace(/<[^>]+>/g, '').trim();
+
+      // Estimate reading time from word count
+      const textContent = html.replace(/<[^>]+>/g, '').replace(/\s+/g, '');
+      const chineseChars = (textContent.match(/[\u4e00-\u9fa5]/g) || []).length;
+      if (chineseChars > 100) {
+        const minutes = Math.ceil(chineseChars / 400); // 400字/分钟
+        estimatedTime = `📖 约 ${minutes} 分钟阅读`;
+        contentSnippet = title;
+      }
+    } catch (e) {
+      console.log('Fetch failed:', e.message);
+    }
+  }
+
+  // For XiaoHongShu - use description or generic
+  if (platform === 'xiaohongshu') {
+    if (description) {
+      title = description;
+      contentSnippet = description;
+      estimatedTime = '🎬 小红书视频/图文';
+    } else {
+      title = '小红书内容';
+      estimatedTime = '🎬 小红书视频/图文';
+    }
+  }
+
+  // For other URLs - try basic fetch
+  if (!title && platform === 'other') {
+    try {
+      const r = await fetch(url, {
+        headers: { 'User-Agent': 'Mozilla/5.0' },
+        signal: AbortSignal.timeout(5000),
+      });
+      const html = await r.text();
+      const titleMatch = html.match(/<title>([^<]+)<\/title>/);
+      if (titleMatch) title = titleMatch[1].trim();
+      const textContent = html.replace(/<[^>]+>/g, '').replace(/\s+/g, '');
+      const chineseChars = (textContent.match(/[\u4e00-\u9fa5]/g) || []).length;
+      if (chineseChars > 100) {
+        const minutes = Math.ceil(chineseChars / 400);
+        estimatedTime = `📖 约 ${minutes} 分钟阅读`;
+      }
+    } catch (e) {}
+  }
+
+  // Use Claude to check if AI-related and extract key insight
+  if (title || description) {
+    try {
+      const checkText = description || title;
+      const r = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.CLAUDE_API_KEY,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: 'claude-opus-4-6',
+          max_tokens: 200,
+          messages: [{
+            role: 'user',
+            content: `判断以下内容是否与AI/人工智能/大模型/ChatGPT/Claude等AI工具相关。如果相关，提取1句核心要点（15字以内）；如果不相关，回复"非AI内容"。
+内容：${checkText}
+只回复JSON格式：{"isAI": true/false, "keyPoint": "要点或空字符串"}`,
+          }],
+        }),
+      });
+      const data = await r.json();
+      const text = data.content[0].text.replace(/```json|```/g, '').trim();
+      const parsed = JSON.parse(text);
+      return res.status(200).json({
+        success: true,
+        platform,
+        title: title || url,
+        estimatedTime,
+        isAI: parsed.isAI,
+        keyPoint: parsed.keyPoint || '',
+        url,
+      });
+    } catch (e) {
+      console.error('Claude check error:', e);
+    }
+  }
+
+  return res.status(200).json({
+    success: true,
+    platform,
+    title: title || url,
+    estimatedTime,
+    isAI: false,
+    keyPoint: '',
+    url,
+  });
+};
+
+function detectPlatform(url) {
+  if (url.includes('xiaohongshu.com') || url.includes('xhslink.com')) return 'xiaohongshu';
+  if (url.includes('mp.weixin.qq.com')) return 'wechat';
+  if (url.includes('bilibili.com') || url.includes('b23.tv')) return 'bilibili';
+  if (url.includes('douyin.com') || url.includes('iesdouyin.com')) return 'douyin';
+  return 'other';
+}
