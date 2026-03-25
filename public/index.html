@@ -17,347 +17,152 @@
       --accent:    #8fa3a0;
       --accent2:   #b0a090;
       --accent3:   #a89bb0;
-      --green:     #7a9e8e;
       --shadow:    rgba(74,67,61,0.1);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Noto Sans SC', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* Header */
     header {
-      padding: 18px 24px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      padding: 18px 24px 14px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 100;
     }
-    .logo {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 1.25rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-    }
+    .logo { font-family: 'Noto Serif SC', serif; font-size: 1.25rem; font-weight: 400; letter-spacing: 0.08em; }
     .logo span { color: var(--accent); }
-    .sync-status {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .sync-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-    .sync-dot.offline { background: var(--accent2); }
+    .sync-status { font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+    .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
-    /* Layout */
-    .main {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      max-width: 1060px;
-      margin: 0 auto;
-      width: 100%;
-      padding: 0 16px;
-    }
+    .main { flex: 1; display: grid; grid-template-columns: 1fr 300px; max-width: 1060px; margin: 0 auto; width: 100%; padding: 0 16px; }
 
-    /* Left Panel */
-    .panel-left {
-      padding: 28px 24px 28px 0;
-      border-right: 1px solid var(--border);
-    }
-    .date-label {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      margin-bottom: 22px;
-      font-family: 'Noto Serif SC', serif;
-    }
+    .panel-left { padding: 28px 24px 28px 0; border-right: 1px solid var(--border); }
+    .date-label { font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 22px; font-family: 'Noto Serif SC', serif; }
 
-    /* Voice */
-    .voice-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
+    .voice-area { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: 22px; }
     .voice-btn {
-      width: 76px; height: 76px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      background: var(--surface);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      box-shadow: 0 4px 16px var(--shadow);
+      width: 76px; height: 76px; border-radius: 50%; border: 2px solid var(--accent);
+      background: var(--surface); cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; box-shadow: 0 4px 16px var(--shadow);
     }
     .voice-btn:hover { background: var(--surface2); transform: scale(1.04); }
-    .voice-btn.recording {
-      background: var(--accent);
-      border-color: var(--accent);
-      animation: pulse 1.5s ease-in-out infinite;
-    }
+    .voice-btn.recording { background: var(--accent); border-color: var(--accent); animation: pulse 1.5s ease-in-out infinite; }
     .voice-btn.recording svg { stroke: white; }
     .voice-btn svg { width: 30px; height: 30px; }
-    @keyframes pulse {
-      0%,100% { box-shadow: 0 0 0 0 rgba(143,163,160,0.4); }
-      50%      { box-shadow: 0 0 0 14px rgba(143,163,160,0); }
-    }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(143,163,160,0.4); } 50% { box-shadow: 0 0 0 14px rgba(143,163,160,0); } }
     .voice-hint { font-size: 0.76rem; color: var(--text-muted); text-align: center; }
     .voice-hint.active { color: var(--accent); }
 
-    /* Interim transcript */
     .interim-box {
-      background: var(--surface);
-      border: 1px dashed var(--border);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      min-height: 38px;
-      line-height: 1.7;
-      display: none;
-      margin-bottom: 12px;
+      background: var(--surface); border: 1px dashed var(--border); border-radius: 8px;
+      padding: 10px 14px; font-size: 0.82rem; color: var(--text-muted); min-height: 38px;
+      line-height: 1.7; display: none; margin-bottom: 12px;
     }
     .interim-box.show { display: block; }
 
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-      color: var(--text-muted);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
+    .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.08em; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* Link preview card */
+    .link-preview {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 16px; margin-bottom: 12px; display: none; animation: fadeUp 0.2s ease;
+      position: relative;
     }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
+    .link-preview.show { display: block; }
+    .link-preview-label { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .link-badge { font-size: 0.6rem; padding: 1px 7px; border-radius: 10px; }
+    .link-badge.ai { background: rgba(168,155,176,0.2); color: var(--accent3); }
+    .link-badge.normal { background: var(--surface2); color: var(--text-muted); }
+    .link-loading { font-size: 0.82rem; color: var(--text-muted); }
+    .link-title { font-size: 0.88rem; color: var(--text); margin-bottom: 4px; font-weight: 500; }
+    .link-meta { font-size: 0.72rem; color: var(--text-muted); }
+    .link-keypoint { font-size: 0.78rem; color: var(--accent3); margin-top: 6px; }
+    .link-url { font-size: 0.68rem; color: var(--accent); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .link-desc-input {
+      width: 100%; margin-top: 10px; padding: 8px 12px; font-size: 0.82rem;
+      font-family: inherit; color: var(--text); background: var(--bg);
+      border: 1px solid var(--border); border-radius: 8px; outline: none; resize: none;
     }
+    .link-desc-input:focus { border-color: var(--accent); }
+    .link-clear { position: absolute; top: 10px; right: 12px; background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1rem; padding: 0; }
 
     textarea.input-area {
-      width: 100%;
-      min-height: 120px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      font-size: 0.9rem;
-      font-family: 'Noto Sans SC', sans-serif;
-      color: var(--text);
-      background: var(--surface);
-      resize: none;
-      outline: none;
-      line-height: 1.75;
-      transition: border-color 0.2s;
-      margin-bottom: 10px;
+      width: 100%; min-height: 100px; border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 16px; font-size: 0.9rem; font-family: 'Noto Sans SC', sans-serif;
+      color: var(--text); background: var(--surface); resize: none; outline: none;
+      line-height: 1.75; transition: border-color 0.2s; margin-bottom: 10px;
     }
     textarea.input-area:focus { border-color: var(--accent); }
     textarea.input-area::placeholder { color: var(--text-muted); }
 
-    .action-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
+    .action-row { display: flex; gap: 8px; align-items: center; }
     .char-count { font-size: 0.72rem; color: var(--text-muted); margin-right: auto; }
-
-    .btn {
-      padding: 9px 18px;
-      border-radius: 8px;
-      border: none;
-      font-size: 0.83rem;
-      font-family: inherit;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+    .btn { padding: 9px 18px; border-radius: 8px; border: none; font-size: 0.83rem; font-family: inherit; cursor: pointer; transition: all 0.2s; }
     .btn-ai { background: var(--accent); color: white; }
     .btn-ai:hover { background: #7a9390; transform: translateY(-1px); }
     .btn-ai:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .btn-outline {
-      background: var(--surface2);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
+    .btn-outline { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
     .btn-outline:hover { background: var(--border); }
 
-    /* AI result */
     .ai-result {
-      margin-top: 14px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent3);
-      border-radius: 12px;
-      padding: 16px;
-      font-size: 0.87rem;
-      line-height: 1.85;
-      display: none;
-      animation: fadeUp 0.3s ease;
+      margin-top: 14px; background: var(--surface); border: 1px solid var(--border);
+      border-left: 3px solid var(--accent3); border-radius: 12px; padding: 16px;
+      font-size: 0.87rem; line-height: 1.85; display: none; animation: fadeUp 0.3s ease;
     }
     .ai-result.show { display: block; }
     .ai-label { font-size: 0.68rem; color: var(--accent3); letter-spacing: 0.12em; margin-bottom: 10px; }
     @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
 
-    /* Right Panel */
     .panel-right { padding: 28px 0 28px 22px; }
-    .section-title {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 0.12em;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
+    .section-title { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.12em; margin-bottom: 12px; text-transform: uppercase; }
 
-    /* Calendar */
-    .calendar {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
-    }
-    .cal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
+    .calendar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 16px; }
+    .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
     .cal-title { font-family: 'Noto Serif SC', serif; font-size: 0.88rem; }
-    .cal-nav {
-      background: none; border: none; cursor: pointer;
-      color: var(--text-muted); font-size: 1rem;
-      padding: 2px 7px; border-radius: 4px;
-      transition: color 0.2s;
-    }
+    .cal-nav { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1rem; padding: 2px 7px; border-radius: 4px; transition: color 0.2s; }
     .cal-nav:hover { color: var(--text); }
     .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
     .cal-day-name { text-align:center; font-size:0.62rem; color:var(--text-muted); padding:3px 0; }
-    .cal-day {
-      text-align:center; font-size:0.75rem; padding:5px 2px;
-      border-radius:5px; cursor:pointer; color:var(--text-muted);
-      transition: all 0.15s; position: relative;
-    }
+    .cal-day { text-align:center; font-size:0.75rem; padding:5px 2px; border-radius:5px; cursor:pointer; color:var(--text-muted); transition: all 0.15s; position: relative; }
     .cal-day:hover { background:var(--surface2); color:var(--text); }
     .cal-day.today { color:var(--accent); font-weight:500; }
-    .cal-day.has-entry::after {
-      content:''; display:block; width:3px; height:3px;
-      border-radius:50%; background:var(--accent2);
-      margin:2px auto 0;
-    }
+    .cal-day.has-entry::after { content:''; display:block; width:3px; height:3px; border-radius:50%; background:var(--accent2); margin:2px auto 0; }
     .cal-day.selected { background:var(--accent); color:white; }
     .cal-day.selected::after { background:white; }
     .cal-day.other-month { opacity:0.3; }
 
-    /* Summary buttons */
     .summary-btns { display:flex; gap:7px; margin-bottom:16px; }
-    .btn-summary {
-      flex:1; padding:8px 6px;
-      border-radius:8px; border:1px solid var(--border);
-      background:var(--surface); font-size:0.74rem;
-      color:var(--text-muted); cursor:pointer; font-family:inherit;
-      transition:all 0.2s; line-height:1.4; text-align:center;
-    }
+    .btn-summary { flex:1; padding:8px 6px; border-radius:8px; border:1px solid var(--border); background:var(--surface); font-size:0.74rem; color:var(--text-muted); cursor:pointer; font-family:inherit; transition:all 0.2s; line-height:1.4; text-align:center; }
     .btn-summary:hover { background:var(--surface2); color:var(--text); border-color:var(--accent); }
     .btn-summary:disabled { opacity:0.5; cursor:not-allowed; }
 
-    /* History */
-    .history-list {
-      display:flex; flex-direction:column; gap:8px;
-      max-height: 380px; overflow-y:auto; padding-right:2px;
-    }
+    .history-list { display:flex; flex-direction:column; gap:8px; max-height: 380px; overflow-y:auto; padding-right:2px; }
     .history-list::-webkit-scrollbar { width:3px; }
     .history-list::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-    .entry-card {
-      background:var(--surface); border:1px solid var(--border);
-      border-radius:10px; padding:11px 13px;
-      cursor:pointer; transition:all 0.2s;
-    }
+    .entry-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:11px 13px; cursor:pointer; transition:all 0.2s; }
     .entry-card:hover { background:var(--surface2); border-color:var(--accent); }
-    .entry-meta {
-      display:flex; justify-content:space-between;
-      font-size:0.66rem; color:var(--text-muted); margin-bottom:5px;
-    }
-    .entry-tag {
-      font-size:0.62rem; background:var(--surface2);
-      padding:1px 7px; border-radius:10px;
-    }
-    .entry-tag.ai { background:rgba(168,155,176,0.2); color:var(--accent3); }
-    .entry-tag.summary { background:rgba(143,163,160,0.2); color:var(--accent); }
-    .entry-text {
-      font-size:0.8rem; line-height:1.6; color:var(--text);
-      display:-webkit-box; -webkit-line-clamp:2;
-      -webkit-box-orient:vertical; overflow:hidden;
-    }
-    .empty-state {
-      text-align:center; padding:28px 0;
-      color:var(--text-muted); font-size:0.8rem; line-height:2.2;
-    }
+    .entry-meta { display:flex; justify-content:space-between; font-size:0.66rem; color:var(--text-muted); margin-bottom:5px; }
+    .entry-tag { font-size:0.62rem; background:var(--surface2); padding:1px 7px; border-radius:10px; }
+    .entry-tag.ai-tag { background:rgba(168,155,176,0.2); color:var(--accent3); }
+    .entry-tag.summary-tag { background:rgba(143,163,160,0.2); color:var(--accent); }
+    .entry-tag.link-tag { background:rgba(176,160,144,0.2); color:var(--accent2); }
+    .entry-text { font-size:0.8rem; line-height:1.6; color:var(--text); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .entry-time-badge { font-size:0.62rem; color:var(--text-muted); margin-top:3px; }
+    .empty-state { text-align:center; padding:28px 0; color:var(--text-muted); font-size:0.8rem; line-height:2.2; }
 
-    /* Loading skeleton */
-    .skeleton {
-      background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.2s infinite;
-      border-radius: 6px;
-      height: 14px;
-      margin-bottom: 8px;
-    }
+    .skeleton { background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 6px; height: 14px; margin-bottom: 8px; }
     @keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
 
-    /* Modal */
-    .modal-overlay {
-      display:none; position:fixed; inset:0;
-      background:rgba(74,67,61,0.45); z-index:200;
-      align-items:center; justify-content:center; padding:20px;
-    }
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(74,67,61,0.45); z-index:200; align-items:center; justify-content:center; padding:20px; }
     .modal-overlay.show { display:flex; }
-    .modal {
-      background:var(--bg); border-radius:16px; padding:28px;
-      max-width:540px; width:100%; max-height:82vh;
-      overflow-y:auto; box-shadow:0 20px 60px rgba(74,67,61,0.2);
-      animation: fadeUp 0.25s ease;
-    }
+    .modal { background:var(--bg); border-radius:16px; padding:28px; max-width:560px; width:100%; max-height:82vh; overflow-y:auto; box-shadow:0 20px 60px rgba(74,67,61,0.2); animation: fadeUp 0.25s ease; }
     .modal-title { font-family:'Noto Serif SC',serif; font-size:1rem; margin-bottom:5px; }
     .modal-date { font-size:0.72rem; color:var(--text-muted); margin-bottom:16px; }
     .modal-body { font-size:0.87rem; line-height:1.95; white-space:pre-wrap; }
     .modal-footer { margin-top:20px; display:flex; gap:8px; justify-content:flex-end; }
 
-    /* Toast */
-    .toast {
-      position:fixed; bottom:26px; left:50%;
-      transform:translateX(-50%) translateY(80px);
-      background:var(--text); color:var(--bg);
-      padding:9px 22px; border-radius:22px;
-      font-size:0.8rem; z-index:999;
-      transition:transform 0.3s ease; pointer-events:none;
-    }
+    .toast { position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--text); color:var(--bg); padding:9px 22px; border-radius:22px; font-size:0.8rem; z-index:999; transition:transform 0.3s ease; pointer-events:none; }
     .toast.show { transform:translateX(-50%) translateY(0); }
-
-    .spinner {
-      display:inline-block; width:13px; height:13px;
-      border:2px solid rgba(255,255,255,0.4);
-      border-top-color:white; border-radius:50%;
-      animation:spin 0.7s linear infinite;
-      vertical-align:middle; margin-right:5px;
-    }
+    .spinner { display:inline-block; width:13px; height:13px; border:2px solid rgba(255,255,255,0.4); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle; margin-right:5px; }
     @keyframes spin { to{transform:rotate(360deg)} }
 
     @media (max-width:680px) {
@@ -371,14 +176,10 @@
 
 <header>
   <div class="logo">思绪<span> · </span>语音日记</div>
-  <div class="sync-status">
-    <div class="sync-dot" id="syncDot"></div>
-    <span id="syncLabel">已连接云端</span>
-  </div>
+  <div class="sync-status"><div class="sync-dot"></div><span>已连接云端</span></div>
 </header>
 
 <div class="main">
-  <!-- Left -->
   <div class="panel-left">
     <div class="date-label" id="todayLabel"></div>
 
@@ -396,10 +197,23 @@
 
     <div class="interim-box" id="interimBox"></div>
 
-    <div class="divider">或直接输入文字</div>
+    <!-- Link preview card -->
+    <div class="link-preview" id="linkPreview">
+      <button class="link-clear" onclick="clearLink()">×</button>
+      <div class="link-preview-label">
+        🔗 链接已识别
+        <span class="link-badge" id="linkBadge"></span>
+      </div>
+      <div id="linkContent">
+        <div class="link-loading"><span class="spinner" style="border-top-color:var(--text-muted)"></span>正在解析…</div>
+      </div>
+      <textarea class="link-desc-input" id="linkDesc" placeholder="可选：补充一句话描述这个内容（帮助AI更好理解）" rows="2"></textarea>
+    </div>
+
+    <div class="divider">或直接输入文字 / 粘贴链接</div>
 
     <textarea class="input-area" id="inputArea"
-      placeholder="在这里写下你的想法、感受、计划……" maxlength="2000"></textarea>
+      placeholder="写下你的想法，或者直接粘贴小红书/微信文章链接…" maxlength="2000"></textarea>
 
     <div class="action-row">
       <span class="char-count" id="charCount">0 / 2000</span>
@@ -417,7 +231,6 @@
     </div>
   </div>
 
-  <!-- Right -->
   <div class="panel-right">
     <div class="section-title">历史记录</div>
     <div class="calendar">
@@ -430,8 +243,8 @@
     </div>
 
     <div class="summary-btns">
-      <button class="btn-summary" id="btnDaily" onclick="triggerSummary('daily')">📋 今日总结<br><small>手动生成并发邮件</small></button>
-      <button class="btn-summary" id="btnWeekly" onclick="triggerSummary('weekly')">📊 本周总结<br><small>手动生成并发邮件</small></button>
+      <button class="btn-summary" id="btnDaily" onclick="triggerSummary('daily')">📋 今日总结<br><small>生成并发邮件</small></button>
+      <button class="btn-summary" id="btnWeekly" onclick="triggerSummary('weekly')">📊 本周总结<br><small>含AI内容整理</small></button>
     </div>
 
     <div class="section-title" id="historyTitle">今日记录</div>
@@ -439,7 +252,6 @@
   </div>
 </div>
 
-<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="maybeCloseModal(event)">
   <div class="modal">
     <div class="modal-title" id="modalTitle"></div>
@@ -461,7 +273,8 @@ let calYear, calMonth, selectedDate;
 let recognition = null, isRecording = false;
 let confirmedTranscript = '';
 let aiCurrentResult = '';
-let cachedEntries = {}; // { 'YYYY-MM-DD': [...] }
+let cachedEntries = {};
+let pendingLink = null; // { url, title, estimatedTime, isAI, keyPoint }
 
 // ═══════════════════
 // INIT
@@ -471,15 +284,77 @@ window.onload = async () => {
   calYear = now.getFullYear();
   calMonth = now.getMonth();
   selectedDate = dateStr(now);
-
   document.getElementById('todayLabel').textContent =
     now.toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric', weekday:'long' });
-
   setupVoice();
-  setupCharCount();
+  setupInput();
   renderCalendar();
   await loadAndRenderHistory(selectedDate);
 };
+
+// ═══════════════════
+// LINK DETECTION
+// ═══════════════════
+function isURL(text) {
+  return /https?:\/\/[^\s]+/.test(text.trim());
+}
+
+function setupInput() {
+  const ta = document.getElementById('inputArea');
+  ta.addEventListener('input', updateCharCount);
+  ta.addEventListener('paste', async (e) => {
+    setTimeout(async () => {
+      const val = ta.value.trim();
+      if (isURL(val)) {
+        ta.value = '';
+        updateCharCount();
+        await detectLink(val);
+      }
+    }, 50);
+  });
+}
+
+async function detectLink(url) {
+  const preview = document.getElementById('linkPreview');
+  const badge = document.getElementById('linkBadge');
+  const content = document.getElementById('linkContent');
+
+  preview.classList.add('show');
+  badge.textContent = '';
+  badge.className = 'link-badge';
+  content.innerHTML = `<div class="link-loading"><span class="spinner" style="border-top-color:var(--text-muted)"></span>正在解析链接…</div>`;
+
+  try {
+    const r = await fetch('/api/fetch-link', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url }),
+    });
+    const data = await r.json();
+    pendingLink = { ...data, url };
+
+    badge.textContent = data.isAI ? '🤖 AI相关' : '普通内容';
+    badge.className = `link-badge ${data.isAI ? 'ai' : 'normal'}`;
+
+    content.innerHTML = `
+      <div class="link-title">${escHtml(data.title || url)}</div>
+      ${data.estimatedTime ? `<div class="link-meta">${escHtml(data.estimatedTime)}</div>` : ''}
+      ${data.keyPoint ? `<div class="link-keypoint">💡 ${escHtml(data.keyPoint)}</div>` : ''}
+      <div class="link-url">${escHtml(url)}</div>
+    `;
+  } catch (e) {
+    pendingLink = { url, title: url, isAI: false };
+    content.innerHTML = `<div class="link-url">${escHtml(url)}</div>`;
+  }
+}
+
+function clearLink() {
+  pendingLink = null;
+  document.getElementById('linkPreview').classList.remove('show');
+  document.getElementById('linkDesc').value = '';
+  document.getElementById('inputArea').value = '';
+  updateCharCount();
+}
 
 // ═══════════════════
 // VOICE
@@ -488,7 +363,6 @@ function setupVoice() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) {
     document.getElementById('voiceHint').textContent = '请用 Chrome 浏览器以支持语音输入';
-    document.getElementById('voiceBtn').style.opacity = '0.4';
     return;
   }
   recognition = new SR();
@@ -499,51 +373,46 @@ function setupVoice() {
   recognition.onresult = (e) => {
     let interim = '', final = '';
     for (let i = e.resultIndex; i < e.results.length; i++) {
-      e.results[i].isFinal
-        ? final += e.results[i][0].transcript
-        : interim += e.results[i][0].transcript;
+      e.results[i].isFinal ? final += e.results[i][0].transcript : interim += e.results[i][0].transcript;
     }
     confirmedTranscript += final;
     document.getElementById('inputArea').value = confirmedTranscript;
-    document.getElementById('interimBox').textContent = interim || '正在聆听…';
+    document.getElementById('interimBox').textContent = interim || '正在聆听，请说话…';
     updateCharCount();
   };
   recognition.onerror = (e) => {
-    if (e.error === 'not-allowed') showToast('请允许麦克风权限');
-    stopRecording();
+    if (e.error === 'not-allowed') { showToast('请允许麦克风权限'); isRecording = false; updateVoiceUI(false); }
   };
-  recognition.onend = () => { if (isRecording) recognition.start(); };
+  recognition.onend = () => {
+    if (isRecording) setTimeout(() => { if (isRecording) try { recognition.start(); } catch(e){} }, 150);
+  };
 }
 
-function toggleVoice() {
-  isRecording ? stopRecording() : startRecording();
-}
+function toggleVoice() { isRecording ? stopRecording() : startRecording(); }
 function startRecording() {
-  if (!recognition) return;
+  if (!recognition || isRecording) return;
   confirmedTranscript = document.getElementById('inputArea').value;
-  recognition.start();
   isRecording = true;
-  document.getElementById('voiceBtn').classList.add('recording');
-  document.getElementById('voiceHint').textContent = '正在聆听… 再次点击停止';
-  document.getElementById('voiceHint').classList.add('active');
-  document.getElementById('interimBox').classList.add('show');
+  try {
+    recognition.start();
+    updateVoiceUI(true);
+    document.getElementById('interimBox').classList.add('show');
+    document.getElementById('interimBox').textContent = '正在聆听，请说话…';
+  } catch(e) { isRecording = false; showToast('启动失败，请刷新后重试'); }
 }
 function stopRecording() {
   if (!recognition) return;
-  recognition.stop();
   isRecording = false;
-  document.getElementById('voiceBtn').classList.remove('recording');
-  document.getElementById('voiceHint').textContent = '点击麦克风开始语音输入';
-  document.getElementById('voiceHint').classList.remove('active');
+  try { recognition.abort(); } catch(e) {}
+  updateVoiceUI(false);
   document.getElementById('interimBox').classList.remove('show');
 }
-
-// ═══════════════════
-// CHAR COUNT
-// ═══════════════════
-function setupCharCount() {
-  document.getElementById('inputArea').addEventListener('input', updateCharCount);
+function updateVoiceUI(active) {
+  document.getElementById('voiceBtn').classList.toggle('recording', active);
+  document.getElementById('voiceHint').textContent = active ? '🔴 录音中… 再次点击停止' : '点击麦克风开始语音输入';
+  document.getElementById('voiceHint').classList.toggle('active', active);
 }
+
 function updateCharCount() {
   const v = document.getElementById('inputArea').value.length;
   document.getElementById('charCount').textContent = `${v} / 2000`;
@@ -555,75 +424,85 @@ function updateCharCount() {
 async function aiOrganize() {
   const text = document.getElementById('inputArea').value.trim();
   if (!text) { showToast('请先输入内容'); return; }
-
   const btn = document.getElementById('aiBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>整理中…';
-
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>整理中…';
   try {
-    const r = await fetch('/api/organize', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text }),
-    });
+    const r = await fetch('/api/organize', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ text }) });
     const data = await r.json();
     if (!r.ok) throw new Error(data.error);
     aiCurrentResult = data.result;
     document.getElementById('aiResultText').textContent = data.result;
     document.getElementById('aiResult').classList.add('show');
-  } catch (e) {
-    showToast('AI整理失败：' + e.message);
-  }
-
-  btn.disabled = false;
-  btn.innerHTML = '✦ AI整理';
+  } catch(e) { showToast('AI整理失败：' + e.message); }
+  btn.disabled = false; btn.innerHTML = '✦ AI整理';
 }
-
-function saveAiResult() {
-  document.getElementById('inputArea').value = aiCurrentResult;
-  updateCharCount();
-  closeAiResult();
-  saveEntry();
-}
-function closeAiResult() {
-  document.getElementById('aiResult').classList.remove('show');
-}
+function saveAiResult() { document.getElementById('inputArea').value = aiCurrentResult; updateCharCount(); closeAiResult(); saveEntry(); }
+function closeAiResult() { document.getElementById('aiResult').classList.remove('show'); }
 
 // ═══════════════════
 // SAVE ENTRY
 // ═══════════════════
 async function saveEntry() {
+  const now = new Date();
+
+  // Saving a link
+  if (pendingLink) {
+    const desc = document.getElementById('linkDesc').value.trim();
+    // Re-fetch with description if provided
+    if (desc && !pendingLink.keyPoint) {
+      showToast('正在分析链接…');
+      try {
+        const r = await fetch('/api/fetch-link', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: pendingLink.url, description: desc }),
+        });
+        const data = await r.json();
+        pendingLink = { ...pendingLink, ...data };
+      } catch(e) {}
+    }
+
+    try {
+      const r = await fetch('/api/entries', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: desc || pendingLink.title || pendingLink.url,
+          type: 'link',
+          date: dateStr(now),
+          time: now.toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit' }),
+          linkUrl: pendingLink.url,
+          linkTitle: pendingLink.title || pendingLink.url,
+          estimatedTime: pendingLink.estimatedTime || '',
+          isAI: pendingLink.isAI || false,
+          keyPoint: pendingLink.keyPoint || '',
+        }),
+      });
+      if (!r.ok) throw new Error((await r.json()).error);
+      clearLink();
+      delete cachedEntries[dateStr(now)];
+      await loadAndRenderHistory(selectedDate);
+      renderCalendar();
+      showToast('链接已保存 ✓');
+    } catch(e) { showToast('保存失败：' + e.message); }
+    return;
+  }
+
+  // Saving text
   const text = document.getElementById('inputArea').value.trim();
   if (!text) { showToast('内容不能为空'); return; }
-
   try {
-    const now = new Date();
     const r = await fetch('/api/entries', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        text,
-        type: 'note',
-        date: dateStr(now),
-        time: now.toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit' }),
-      }),
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, type: 'note', date: dateStr(now), time: now.toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit' }) }),
     });
     if (!r.ok) throw new Error((await r.json()).error);
-
-    document.getElementById('inputArea').value = '';
-    confirmedTranscript = '';
-    updateCharCount();
-    closeAiResult();
+    document.getElementById('inputArea').value = ''; confirmedTranscript = '';
+    updateCharCount(); closeAiResult();
     if (isRecording) stopRecording();
-
-    // refresh cache and UI
     delete cachedEntries[dateStr(now)];
     await loadAndRenderHistory(selectedDate);
     renderCalendar();
     showToast('已保存到云端 ✓');
-  } catch (e) {
-    showToast('保存失败：' + e.message);
-  }
+  } catch(e) { showToast('保存失败：' + e.message); }
 }
 
 // ═══════════════════
@@ -633,59 +512,20 @@ function renderCalendar() {
   document.getElementById('calTitle').textContent = `${calYear} 年 ${calMonth + 1} 月`;
   const grid = document.getElementById('calGrid');
   grid.innerHTML = '';
-
-  ['日','一','二','三','四','五','六'].forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'cal-day-name';
-    el.textContent = d;
-    grid.appendChild(el);
-  });
-
-  const first = new Date(calYear, calMonth, 1);
-  const last  = new Date(calYear, calMonth + 1, 0);
-  const today = dateStr(new Date());
-
-  // collect all cached dates that have entries
-  const datesWithEntries = new Set(
-    Object.entries(cachedEntries)
-      .filter(([,arr]) => arr.length > 0)
-      .map(([d]) => d)
-  );
-
-  for (let i = 0; i < first.getDay(); i++) {
-    const prev = new Date(calYear, calMonth, -first.getDay() + i + 1);
-    addCalDay(grid, prev.getDate(), dateStr(prev), true, datesWithEntries, today);
-  }
-  for (let d = 1; d <= last.getDate(); d++) {
-    const ds = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    addCalDay(grid, d, ds, false, datesWithEntries, today);
-  }
+  ['日','一','二','三','四','五','六'].forEach(d => { const el = document.createElement('div'); el.className='cal-day-name'; el.textContent=d; grid.appendChild(el); });
+  const first = new Date(calYear, calMonth, 1), last = new Date(calYear, calMonth+1, 0), today = dateStr(new Date());
+  const datesWithEntries = new Set(Object.entries(cachedEntries).filter(([,arr]) => arr.length>0).map(([d])=>d));
+  for (let i=0; i<first.getDay(); i++) { const prev=new Date(calYear,calMonth,-first.getDay()+i+1); addCalDay(grid,prev.getDate(),dateStr(prev),true,datesWithEntries,today); }
+  for (let d=1; d<=last.getDate(); d++) { const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; addCalDay(grid,d,ds,false,datesWithEntries,today); }
 }
-
-function addCalDay(grid, num, ds, otherMonth, datesSet, today) {
-  const el = document.createElement('div');
-  el.className = 'cal-day';
-  el.textContent = num;
-  if (otherMonth)       el.classList.add('other-month');
-  if (ds === today)     el.classList.add('today');
-  if (ds === selectedDate) el.classList.add('selected');
-  if (datesSet.has(ds)) el.classList.add('has-entry');
-  el.onclick = () => selectDate(ds);
-  grid.appendChild(el);
+function addCalDay(grid,num,ds,otherMonth,datesSet,today) {
+  const el=document.createElement('div'); el.className='cal-day'; el.textContent=num;
+  if(otherMonth) el.classList.add('other-month'); if(ds===today) el.classList.add('today');
+  if(ds===selectedDate) el.classList.add('selected'); if(datesSet.has(ds)) el.classList.add('has-entry');
+  el.onclick=()=>selectDate(ds); grid.appendChild(el);
 }
-
-function changeMonth(dir) {
-  calMonth += dir;
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  if (calMonth < 0)  { calMonth = 11; calYear--; }
-  renderCalendar();
-}
-
-async function selectDate(ds) {
-  selectedDate = ds;
-  renderCalendar();
-  await loadAndRenderHistory(ds);
-}
+function changeMonth(dir) { calMonth+=dir; if(calMonth>11){calMonth=0;calYear++;} if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); }
+async function selectDate(ds) { selectedDate=ds; renderCalendar(); await loadAndRenderHistory(ds); }
 
 // ═══════════════════
 // HISTORY
@@ -693,118 +533,80 @@ async function selectDate(ds) {
 async function loadAndRenderHistory(ds) {
   const label = ds === dateStr(new Date()) ? '今日记录' : `${ds} 的记录`;
   document.getElementById('historyTitle').textContent = label;
-
   const list = document.getElementById('historyList');
-
-  // Show skeleton
-  list.innerHTML = `
-    <div style="padding:4px 0">
-      <div class="skeleton" style="width:40%;height:10px"></div>
-      <div class="skeleton" style="width:90%"></div>
-      <div class="skeleton" style="width:75%"></div>
-    </div>`;
-
+  list.innerHTML = `<div style="padding:4px 0"><div class="skeleton" style="width:40%;height:10px"></div><div class="skeleton" style="width:90%"></div><div class="skeleton" style="width:75%"></div></div>`;
   try {
     if (!cachedEntries[ds]) {
       const r = await fetch(`/api/entries?date=${ds}`);
-      const data = await r.json();
-      cachedEntries[ds] = data.entries || [];
+      cachedEntries[ds] = (await r.json()).entries || [];
     }
     renderHistory(ds);
-  } catch (e) {
-    list.innerHTML = '<div class="empty-state">加载失败，请检查网络</div>';
-  }
+  } catch(e) { list.innerHTML = '<div class="empty-state">加载失败，请检查网络</div>'; }
 }
 
 function renderHistory(ds) {
   const list = document.getElementById('historyList');
-  const dayEntries = (cachedEntries[ds] || []);
+  const dayEntries = cachedEntries[ds] || [];
+  if (!dayEntries.length) { list.innerHTML = '<div class="empty-state">这一天还没有记录<br>说出或写下你的第一个想法</div>'; return; }
 
-  if (!dayEntries.length) {
-    list.innerHTML = '<div class="empty-state">这一天还没有记录<br>说出或写下你的第一个想法</div>';
-    return;
-  }
-
-  list.innerHTML = dayEntries.map(e => `
-    <div class="entry-card" onclick="openEntry('${e.id}','${ds}')">
-      <div class="entry-meta">
-        <span>${e.time || ''}</span>
-        <span class="entry-tag ${e.type !== 'note' ? (e.type.includes('summary') ? 'summary' : 'ai') : ''}">
-          ${e.type === 'summary_daily' ? '日总结' : e.type === 'summary_weekly' ? '周总结' : '想法'}
-        </span>
-      </div>
-      <div class="entry-text">${escHtml(e.text)}</div>
-    </div>
-  `).join('');
+  list.innerHTML = dayEntries.map(e => {
+    const tagClass = e.type === 'link' ? 'link-tag' : e.type.includes('summary') ? 'summary-tag' : e.type.includes('ai') ? 'ai-tag' : '';
+    const tagLabel = e.type === 'link' ? (e.isAI ? '🤖 AI链接' : '🔗 链接') :
+                     e.type === 'summary_daily' ? '日总结' : e.type === 'summary_weekly' ? '周总结' :
+                     e.type === 'summary_ai_script' ? '✦ 口播稿' : e.type === 'summary_ai_xhs' ? '✦ 小红书' : '想法';
+    const displayText = e.type === 'link' ? (e.linkTitle || e.text) : e.text;
+    return `<div class="entry-card" onclick="openEntry('${e.id}','${ds}')">
+      <div class="entry-meta"><span>${e.time||''}</span><span class="entry-tag ${tagClass}">${tagLabel}</span></div>
+      <div class="entry-text">${escHtml(displayText)}</div>
+      ${e.estimatedTime ? `<div class="entry-time-badge">${escHtml(e.estimatedTime)}</div>` : ''}
+    </div>`;
+  }).join('');
 }
 
 function openEntry(id, ds) {
-  const e = (cachedEntries[ds] || []).find(x => String(x.id) === String(id));
+  const e = (cachedEntries[ds]||[]).find(x=>String(x.id)===String(id));
   if (!e) return;
-  document.getElementById('modalTitle').textContent =
-    e.type === 'summary_daily' ? '📋 每日总结' :
-    e.type === 'summary_weekly' ? '📊 每周总结' : '💭 想法记录';
+  const titles = { summary_daily:'📋 每日总结', summary_weekly:'📊 每周总结', summary_ai_script:'🎙️ 本周口播稿', summary_ai_xhs:'📱 小红书文案', link:'🔗 链接记录', note:'💭 想法记录' };
+  document.getElementById('modalTitle').textContent = titles[e.type] || '记录';
   document.getElementById('modalDate').textContent = `${e.date}  ${e.time}`;
-  document.getElementById('modalBody').textContent = e.text;
+  document.getElementById('modalBody').textContent = e.type === 'link'
+    ? `${e.linkTitle || e.text}\n\n${e.estimatedTime||''}\n${e.keyPoint ? '核心要点：'+e.keyPoint : ''}\n\n${e.linkUrl||''}`
+    : e.text;
   document.getElementById('modalOverlay').classList.add('show');
 }
-
-function maybeCloseModal(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
-}
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('show');
-}
+function maybeCloseModal(e) { if(e.target===document.getElementById('modalOverlay')) closeModal(); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
 
 // ═══════════════════
 // SUMMARY
 // ═══════════════════
 async function triggerSummary(type) {
-  const btnId = type === 'daily' ? 'btnDaily' : 'btnWeekly';
+  const btnId = type==='daily'?'btnDaily':'btnWeekly';
   const btn = document.getElementById(btnId);
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>生成中…';
-
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>生成中…';
   try {
-    const r = await fetch('/api/summary', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type, sendEmail: true }),
-    });
+    const r = await fetch('/api/summary', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({type, sendEmail:true}) });
     const data = await r.json();
-    if (!r.ok) throw new Error(data.error || data.message);
+    if (!r.ok) throw new Error(data.error||data.message);
     if (data.message) { showToast(data.message); return; }
-
-    // refresh today's entries to show the summary
     delete cachedEntries[dateStr(new Date())];
     await loadAndRenderHistory(selectedDate);
     renderCalendar();
-    showToast('总结已生成并发送到邮箱 ✓');
-  } catch (e) {
-    showToast('生成失败：' + e.message);
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = type === 'daily'
-      ? '📋 今日总结<br><small>手动生成并发邮件</small>'
-      : '📊 本周总结<br><small>手动生成并发邮件</small>';
+    const msg = type==='weekly' && data.aiScript ? '总结已生成！含AI内容口播稿，已发邮件 ✓' : '总结已生成并发送到邮箱 ✓';
+    showToast(msg);
+  } catch(e) { showToast('生成失败：'+e.message); }
+  finally {
+    btn.disabled=false;
+    btn.innerHTML = type==='daily' ? '📋 今日总结<br><small>生成并发邮件</small>' : '📊 本周总结<br><small>含AI内容整理</small>';
   }
 }
 
 // ═══════════════════
 // UTILS
 // ═══════════════════
-function dateStr(d) {
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
-}
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function dateStr(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 </script>
 </body>
 </html>
