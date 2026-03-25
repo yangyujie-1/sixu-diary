@@ -1,9 +1,9 @@
-// Upstash Redis REST API helper - no npm package needed
 const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
 const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
 
 async function redis(command, ...args) {
-  const r = await fetch(`${REDIS_URL}/${[command, ...args].map(encodeURIComponent).join('/')}`, {
+  const url = `${REDIS_URL}/${[command, ...args].map(encodeURIComponent).join('/')}`;
+  const r = await fetch(url, {
     headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
   });
   const data = await r.json();
@@ -11,14 +11,10 @@ async function redis(command, ...args) {
   return data.result;
 }
 
-export const kv = {
-  async lpush(key, value) {
-    return redis('lpush', key, value);
-  },
-  async lrange(key, start, end) {
-    return redis('lrange', key, start, end);
-  },
-  async expire(key, seconds) {
-    return redis('expire', key, seconds);
-  },
+const kv = {
+  async lpush(key, value) { return redis('lpush', key, value); },
+  async lrange(key, start, end) { return redis('lrange', key, start, end); },
+  async expire(key, seconds) { return redis('expire', key, seconds); },
 };
+
+module.exports = { kv };
