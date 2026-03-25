@@ -2,10 +2,6 @@
   "name": "sixu-diary",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "dev": "vercel dev"
-  },
-  "dependencies": {
-    "resend": "^3.0.0"
-  }
+  "scripts": { "dev": "vercel dev" },
+  "dependencies": { "resend": "^3.0.0" }
 }
